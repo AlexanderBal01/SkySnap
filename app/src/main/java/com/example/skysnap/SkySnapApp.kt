@@ -17,6 +17,7 @@ import com.example.skysnap.components.SkySnapBottomAppBar
 import com.example.skysnap.screens.AppInfoScreen
 import com.example.skysnap.screens.HomeScreen
 import com.example.skysnap.screens.OverviewScreens
+import com.example.skysnap.screens.StarredScreen
 import com.example.skysnap.ui.theme.SkySnapTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +35,7 @@ fun SkySnapApp() {
         )
     }
     val goToAppInfo = { navController.navigate(OverviewScreens.AppInfo.name) }
+    val goToStarred = { navController.navigate(OverviewScreens.Starred.name) }
 
     val currentScreenTitle = OverviewScreens.valueOf(
         backStackEntry?.destination?.route ?: OverviewScreens.Start.name,
@@ -51,7 +53,8 @@ fun SkySnapApp() {
         bottomBar = {
             SkySnapBottomAppBar(
                 goHome,
-                goToAppInfo
+                goToAppInfo,
+                goToStarred,
             )
         }
     ) { innerPadding ->
@@ -62,6 +65,10 @@ fun SkySnapApp() {
         ) {
             composable(route = OverviewScreens.Start.name) {
                 HomeScreen()
+            }
+
+            composable(route = OverviewScreens.Starred.name) {
+                StarredScreen()
             }
 
             composable(route =  OverviewScreens.AppInfo.name) {

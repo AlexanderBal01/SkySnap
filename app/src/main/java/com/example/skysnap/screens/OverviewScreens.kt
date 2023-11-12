@@ -8,4 +8,5 @@ enum class OverviewScreens(@StringRes val title: Int) {
     AppInfo(title= R.string.info_app),
     WeekOverview(title = R.string.overview_week),
     DayOverview(title = R.string.overview_day),
+    Starred(title = R.string.overview_starred)
 }

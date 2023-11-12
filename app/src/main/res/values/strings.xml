@@ -4,7 +4,11 @@
     <string name="overview_week">Week overzicht</string>
     <string name="overview_day">Dag overzicht</string>
     <string name="overview_city">Steden overzicht</string>
+    <string name="overview_starred">Favorieten</string>
     <string name="go_back">Ga terug</string>
     <string name="go_home">Ga naar het homescherm</string>
     <string name="go_info">Ga naar het infoscherm</string>
+    <string name="go_starred">Ga naar het favorietenscherm</string>
+    <string name="api_key">FxZbnUgAphCVmuwkP9oPpL5pR4mySqFN</string>
+    <string name="go_to_region">ga naar de gekozen regio</string>
 </resources>
