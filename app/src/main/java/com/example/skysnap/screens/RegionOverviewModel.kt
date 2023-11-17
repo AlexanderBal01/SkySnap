@@ -39,6 +39,7 @@ class RegionOverviewModel(private val regionRepository: RegionRepository) : View
                 regionApiState = RegionApiState.Success(listResult)
             } catch (e: IOException) {
                 regionApiState = RegionApiState.Error
+                println(e)
             }
         }
     }

@@ -10,8 +10,8 @@ interface AppContainer {
     val regionRepository: RegionRepository
 }
 
-class DefaultAppContainer(): AppContainer {
-    private val baseUrl = "http://dataservice.accuweather.com/"
+class DefaultAppContainer: AppContainer {
+    private val baseUrl = "https://dataservice.accuweather.com/"
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(
             Json.asConverterFactory("application/json".toMediaType())

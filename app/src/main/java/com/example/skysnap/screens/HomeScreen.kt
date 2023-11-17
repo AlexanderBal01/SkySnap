@@ -14,7 +14,7 @@ import com.example.skysnap.ui.theme.SkySnapTheme
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    regionOverviewModel: RegionOverviewModel = viewModel()
+    regionOverviewModel: RegionOverviewModel = viewModel(factory = RegionOverviewModel.Factory)
 ) {
     val regionState by regionOverviewModel.uiState.collectAsState()
 

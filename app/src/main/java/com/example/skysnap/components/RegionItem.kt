@@ -31,14 +31,13 @@ fun RegionItem(
 ) {
     Button(onClick = { /*TODO*/ }) {
         Card(
-            modifier = modifier.padding(8.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             Row (
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier
                     .animateContentSize(
                         animationSpec = spring(
