@@ -1,4 +1,4 @@
-package com.example.skysnap.network
+package com.example.skysnap.network.Region
 
 import com.example.skysnap.model.Region
 import kotlinx.serialization.Serializable

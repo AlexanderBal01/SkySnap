@@ -1,4 +1,4 @@
-package com.example.skysnap.network
+package com.example.skysnap.network.Region
 
 import retrofit2.http.GET
 import retrofit2.http.Query

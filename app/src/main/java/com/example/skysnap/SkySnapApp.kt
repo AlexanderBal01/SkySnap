@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.skysnap.components.SkySnapAppBar
 import com.example.skysnap.components.SkySnapBottomAppBar
 import com.example.skysnap.screens.AppInfoScreen
+import com.example.skysnap.screens.CountryScreen
 import com.example.skysnap.screens.HomeScreen
 import com.example.skysnap.screens.OverviewScreens
 import com.example.skysnap.screens.StarredScreen
@@ -64,7 +65,11 @@ fun SkySnapApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = OverviewScreens.Start.name) {
-                HomeScreen()
+                HomeScreen(navController = navController)
+            }
+
+            composable(route = OverviewScreens.CountryOverview.name) {
+                CountryScreen()
             }
 
             composable(route = OverviewScreens.Starred.name) {

@@ -1,8 +1,8 @@
 package com.example.skysnap.data
 
 import com.example.skysnap.model.Region
-import com.example.skysnap.network.RegionApiService
-import com.example.skysnap.network.asDomainObjects
+import com.example.skysnap.network.Region.RegionApiService
+import com.example.skysnap.network.Region.asDomainObjects
 
 interface RegionRepository {
     suspend fun getRegions() : List<Region>

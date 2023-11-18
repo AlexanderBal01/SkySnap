@@ -1,6 +1,6 @@
 package com.example.skysnap.data
 
-import com.example.skysnap.network.RegionApiService
+import com.example.skysnap.network.Region.RegionApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
