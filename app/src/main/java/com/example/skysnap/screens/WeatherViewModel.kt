@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.skysnap.SkySnapApplication
 import com.example.skysnap.data.RegionRepository
+import com.example.skysnap.data.WeatherUiState
 import com.example.skysnap.model.Region
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +20,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class RegionOverviewModel(private val regionRepository: RegionRepository) : ViewModel() {
-    private val _uiState = MutableStateFlow(RegionState(listOf<Region>()))
-    val uiState: StateFlow<RegionState> = _uiState.asStateFlow()
+class WeatherViewModel(private val regionRepository: RegionRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(WeatherUiState())
+    val uiState: StateFlow<WeatherUiState> = _uiState.asStateFlow()
 
     var regionApiState: RegionApiState by mutableStateOf(RegionApiState.Loading)
         private set
@@ -29,12 +30,14 @@ class RegionOverviewModel(private val regionRepository: RegionRepository) : View
             getApiRegions()
         }
 
+    var CountryApiState: Co
+
     private fun getApiRegions() {
         viewModelScope.launch {
             try {
                 val listResult = regionRepository.getRegions()
                 _uiState.update {
-                    it.copy(currentRegionList = listResult)
+                    it.copy(regionList = listResult)
                 }
                 regionApiState = RegionApiState.Success(listResult)
             } catch (e: IOException) {
@@ -44,12 +47,18 @@ class RegionOverviewModel(private val regionRepository: RegionRepository) : View
         }
     }
 
+    fun setRegionId(id: String) {
+        _uiState.update {
+            it.copy(regionId = id)
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as SkySnapApplication)
                 val regionRepository = application.container.regionRepository
-                RegionOverviewModel(regionRepository = regionRepository)
+                WeatherViewModel(regionRepository = regionRepository)
             }
         }
     }

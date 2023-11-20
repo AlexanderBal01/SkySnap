@@ -24,22 +24,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.skysnap.screens.OverviewScreens
 
 @Composable
 fun RegionItem(
     modifier: Modifier = Modifier,
     name: String = "",
     id: String = "",
-    navController: NavController,
+    onRegionItemClicked: (String) -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
             .requiredHeight(72.dp)
             .clip(shape = RoundedCornerShape(15.dp))
             .background(MaterialTheme.colorScheme.primary)
-            .clickable { navController.navigate(OverviewScreens.CountryOverview.name) }
+            .clickable { onRegionItemClicked(id) }
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,

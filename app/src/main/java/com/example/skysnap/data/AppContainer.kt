@@ -5,6 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
+import retrofit2.create
 
 interface AppContainer {
     val regionRepository: RegionRepository
@@ -19,11 +20,11 @@ class DefaultAppContainer: AppContainer {
         .baseUrl(baseUrl)
         .build()
 
-    private val retrofitService : RegionApiService by lazy {
+    private val retrofitServiceRegion : RegionApiService by lazy {
         retrofit.create(RegionApiService::class.java)
     }
 
     override val regionRepository: RegionRepository by lazy {
-        ApiRegionRepository(retrofitService)
+        ApiRegionRepository(retrofitServiceRegion)
     }
 }
