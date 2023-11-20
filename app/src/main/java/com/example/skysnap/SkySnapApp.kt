@@ -97,7 +97,7 @@ fun SkySnapApp(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun SkySnapAppPreview() {
     SkySnapTheme {
         SkySnapApp()
     }
