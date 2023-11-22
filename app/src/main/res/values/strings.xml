@@ -4,7 +4,8 @@
     <string name="overview_week">Week overzicht</string>
     <string name="overview_day">Dag overzicht</string>
     <string name="overview_region">Regio overzicht</string>
-    <string name="overview_city">Landen overzicht</string>
+    <string name="overview_country">Landen overzicht</string>
+    <string name="overview_city">Steden overzicht</string>
     <string name="overview_starred">Favorieten</string>
     <string name="go_back">Ga terug</string>
     <string name="go_home">Ga naar het homescherm</string>

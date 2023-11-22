@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skysnap.components.RegionList
+import com.example.skysnap.model.Region
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    regionState: List<com.example.skysnap.model.Region>,
+    regionState: List<Region>,
     regionApiState: RegionApiState,
     onRegionItemClicked: (String) -> Unit,
 ) {

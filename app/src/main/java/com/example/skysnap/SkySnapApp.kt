@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.skysnap.components.SkySnapAppBar
 import com.example.skysnap.components.SkySnapBottomAppBar
 import com.example.skysnap.screens.AppInfoScreen
+import com.example.skysnap.screens.CityScreen
 import com.example.skysnap.screens.CountryScreen
 import com.example.skysnap.screens.HomeScreen
 import com.example.skysnap.screens.OverviewScreens
@@ -81,7 +82,13 @@ fun SkySnapApp(
             }
 
             composable(route = OverviewScreens.CountryOverview.name) {
-                CountryScreen()
+                CountryScreen(
+                    countryState = uiState.CountryList,
+                    countryApiState = weatherViewModel.countryApiState,
+                ) {
+                    weatherViewModel.setCountryId(it)
+                    navController.navigate(OverviewScreens.CityOverview.name)
+                }
             }
 
             composable(route = OverviewScreens.Starred.name) {
@@ -90,6 +97,10 @@ fun SkySnapApp(
 
             composable(route =  OverviewScreens.AppInfo.name) {
                 AppInfoScreen()
+            }
+
+            composable(route = OverviewScreens.CityOverview.name) {
+                CityScreen()
             }
         }
     }
