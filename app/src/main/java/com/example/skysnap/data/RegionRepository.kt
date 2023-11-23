@@ -18,6 +18,7 @@ class ApiRegionRepository(
     }
 
     override suspend fun getCountriesRegion(regionId: String): List<Country> {
+        println(regionId)
         return regionApiService.getCountriesRegion(id = regionId, "FxZbnUgAphCVmuwkP9oPpL5pR4mySqFN", "nl-be").asDomainObjects()
     }
 }

@@ -65,7 +65,6 @@ fun SkySnapApp(
             )
         }
     ) { innerPadding ->
-        val uiState by weatherViewModel.uiState.collectAsState()
         NavHost(
             navController = navController,
             startDestination = OverviewScreens.Start.name,
@@ -73,22 +72,17 @@ fun SkySnapApp(
         ) {
             composable(route = OverviewScreens.Start.name) {
                 HomeScreen(
-                    regionState = uiState.regionList,
-                    regionApiState = weatherViewModel.regionApiState,
-                ) {
-                    weatherViewModel.setRegionId(it)
-                    navController.navigate(OverviewScreens.CountryOverview.name)
-                }
+                    onRegionItemClicked = {
+                        weatherViewModel.setRegionId(it)
+                        navController.navigate(OverviewScreens.CountryOverview.name)
+                    }
+                )
             }
 
             composable(route = OverviewScreens.CountryOverview.name) {
                 CountryScreen(
-                    countryState = uiState.CountryList,
-                    countryApiState = weatherViewModel.countryApiState,
-                ) {
-                    weatherViewModel.setCountryId(it)
-                    navController.navigate(OverviewScreens.CityOverview.name)
-                }
+                    onCountryItemClicked = {}
+                )
             }
 
             composable(route = OverviewScreens.Starred.name) {

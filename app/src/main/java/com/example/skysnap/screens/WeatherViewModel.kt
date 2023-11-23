@@ -56,7 +56,7 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
             try {
                 val listResult = regionRepository.getCountriesRegion(uiState.value.regionId)
                 _uiState.update {
-                    it.copy(CountryList = listResult)
+                    it.copy(countryList = listResult)
                 }
                 countryApiState = CountryApiState.Succes(listResult)
             } catch (e: IOException) {
@@ -70,13 +70,13 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
         _uiState.update {
             it.copy(regionId = id)
         }
-        println(id)
     }
 
     fun setCountryId(id: String) {
         _uiState.update {
             it.copy(countryId = id)
         }
+
     }
 
     companion object {
