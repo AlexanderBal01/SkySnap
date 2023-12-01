@@ -19,10 +19,10 @@ import com.example.skysnap.components.SkySnapBottomAppBar
 import com.example.skysnap.screens.AppInfoScreen
 import com.example.skysnap.screens.CityScreen
 import com.example.skysnap.screens.CountryScreen
-import com.example.skysnap.screens.HomeScreen
 import com.example.skysnap.screens.OverviewScreens
 import com.example.skysnap.screens.StarredScreen
 import com.example.skysnap.screens.WeatherViewModel
+import com.example.skysnap.screens.region.RegionScreen
 import com.example.skysnap.ui.theme.SkySnapTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +31,7 @@ fun SkySnapApp(
     weatherViewModel: WeatherViewModel = viewModel(factory = WeatherViewModel.Factory)
 ) {
     val navController = rememberNavController()
-    val backStackEntry by navController.currentBackStackEntryAsState()
+    val backStackEntryNav by navController.currentBackStackEntryAsState()
 
     val canNavigateBack = navController.previousBackStackEntry != null
     val navigateUp:() -> Unit = { navController.navigateUp() }
@@ -44,17 +44,12 @@ fun SkySnapApp(
     val goToAppInfo = { navController.navigate(OverviewScreens.AppInfo.name) }
     val goToStarred = { navController.navigate(OverviewScreens.Starred.name) }
 
-    val currentScreenTitle = OverviewScreens.valueOf(
-        backStackEntry?.destination?.route ?: OverviewScreens.Start.name,
-    ).title
-
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
             SkySnapAppBar(
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateUp,
-                currentScreenTitle = currentScreenTitle,
             )
         },
         bottomBar = {
@@ -71,16 +66,17 @@ fun SkySnapApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = OverviewScreens.Start.name) {
-                HomeScreen(
+                RegionScreen(
                     onRegionItemClicked = {
-                        weatherViewModel.setRegionId(it)
-                        navController.navigate(OverviewScreens.CountryOverview.name)
+                        navController.navigate("${OverviewScreens.CountryOverview.name}/${it}")
                     }
                 )
             }
 
-            composable(route = OverviewScreens.CountryOverview.name) {
+            composable(route = "${OverviewScreens.CountryOverview.name}/{regionid}") {backStackEntry ->
                 CountryScreen(
+                    regionId = backStackEntry.arguments?.getString("regionid", "").toString(),
+                    viewModel = weatherViewModel,
                     onCountryItemClicked = {}
                 )
             }

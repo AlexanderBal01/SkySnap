@@ -18,7 +18,6 @@ import com.example.skysnap.R
 fun SkySnapAppBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
-    currentScreenTitle: Int,
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
@@ -26,7 +25,7 @@ fun SkySnapAppBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         title = {
-            Text(stringResource(id = currentScreenTitle))
+            Text(stringResource(id = R.string.app_name))
         },
         navigationIcon = {
             if (canNavigateBack) {

@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skysnap.data.WeatherUiState
 import com.example.skysnap.model.Region
-import com.example.skysnap.screens.RegionApiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -26,7 +26,7 @@ import com.example.skysnap.model.Country
 @Composable
 fun CountryList(
     modifier: Modifier = Modifier,
-    countryOverviewState: State<WeatherUiState>,
+    countryOverviewState: List<Country>,
     onCountryItemClicked: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
@@ -46,7 +46,7 @@ fun CountryList(
     )
     Spacer(modifier = modifier.height(8.dp))
     LazyColumn(state = lazyListState, modifier = modifier.padding(start = 8.dp, end = 8.dp)) {
-        items(filterItems(countryOverviewState.value.countryList, searchText)) {
+        items(filterItems(countryOverviewState, searchText)) {
             CountryItem(name = it.name, id= it.id, onCountryItemClicked = onCountryItemClicked)
             Spacer(modifier = modifier.height(8.dp))
         }

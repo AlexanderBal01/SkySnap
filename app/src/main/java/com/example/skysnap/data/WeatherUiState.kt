@@ -8,4 +8,5 @@ data class WeatherUiState(
     val countryId: String = "",
     val regionList: List<Region> = listOf(),
     val countryList: List<Country> = listOf(),
+    val screenTitle: Int = 0,
 )

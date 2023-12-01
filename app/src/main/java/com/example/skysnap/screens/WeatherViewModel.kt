@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.skysnap.SkySnapApplication
 import com.example.skysnap.data.RegionRepository
 import com.example.skysnap.data.WeatherUiState
+import com.example.skysnap.screens.region.RegionApiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,7 +34,7 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
         private set
 
         init {
-            getApiCountries()
+
         }
 
     private fun getApiRegions() {
@@ -51,10 +52,10 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
         }
     }
 
-    private fun getApiCountries() {
+    fun getApiCountries(id: String = "") {
         viewModelScope.launch {
             try {
-                val listResult = regionRepository.getCountriesRegion(uiState.value.regionId)
+                val listResult = regionRepository.getCountriesRegion(id)
                 _uiState.update {
                     it.copy(countryList = listResult)
                 }
@@ -76,7 +77,12 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
         _uiState.update {
             it.copy(countryId = id)
         }
+    }
 
+    fun setScreenTitle(id: Int) {
+        _uiState.update {
+            it.copy(screenTitle = id)
+        }
     }
 
     companion object {

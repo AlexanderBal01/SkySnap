@@ -1,5 +1,6 @@
 package com.example.skysnap.data
 
+import android.util.Log
 import com.example.skysnap.model.Country
 import com.example.skysnap.model.Region
 import com.example.skysnap.network.Region.RegionApiService
@@ -18,7 +19,7 @@ class ApiRegionRepository(
     }
 
     override suspend fun getCountriesRegion(regionId: String): List<Country> {
-        println(regionId)
+        Log.d("reg", regionId)
         return regionApiService.getCountriesRegion(id = regionId, "FxZbnUgAphCVmuwkP9oPpL5pR4mySqFN", "nl-be").asDomainObjects()
     }
 }
