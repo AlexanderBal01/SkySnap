@@ -43,12 +43,6 @@ class CountryViewModel(private val countryRepository: CountryRepository) : ViewM
         }
     }
 
-    fun setRegionId(id: String) {
-        _uiState.update {
-            it.copy(regionId = id)
-        }
-    }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
