@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,19 +15,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.skysnap.components.SkySnapAppBar
 import com.example.skysnap.components.SkySnapBottomAppBar
-import com.example.skysnap.screens.AppInfoScreen
+import com.example.skysnap.screens.appInfo.AppInfoScreen
 import com.example.skysnap.screens.CityScreen
-import com.example.skysnap.screens.CountryScreen
+import com.example.skysnap.screens.country.CountryScreen
 import com.example.skysnap.screens.OverviewScreens
 import com.example.skysnap.screens.StarredScreen
-import com.example.skysnap.screens.WeatherViewModel
+import com.example.skysnap.screens.country.CountryViewModel
+import com.example.skysnap.screens.region.RegionViewModel
 import com.example.skysnap.screens.region.RegionScreen
 import com.example.skysnap.ui.theme.SkySnapTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SkySnapApp(
-    weatherViewModel: WeatherViewModel = viewModel(factory = WeatherViewModel.Factory)
+    regionViewModel: RegionViewModel = viewModel(factory = RegionViewModel.Factory),
+    countryViewModel: CountryViewModel = viewModel(factory = CountryViewModel.Factory)
 ) {
     val navController = rememberNavController()
     val backStackEntryNav by navController.currentBackStackEntryAsState()
@@ -76,7 +77,7 @@ fun SkySnapApp(
             composable(route = "${OverviewScreens.CountryOverview.name}/{regionid}") {backStackEntry ->
                 CountryScreen(
                     regionId = backStackEntry.arguments?.getString("regionid", "").toString(),
-                    viewModel = weatherViewModel,
+                    viewModel = countryViewModel,
                     onCountryItemClicked = {}
                 )
             }

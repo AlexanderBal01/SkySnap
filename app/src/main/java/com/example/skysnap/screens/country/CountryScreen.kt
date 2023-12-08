@@ -1,4 +1,4 @@
-package com.example.skysnap.screens
+package com.example.skysnap.screens.country
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,11 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skysnap.components.CountryList
+import com.example.skysnap.screens.CountryApiState
+import com.example.skysnap.screens.region.RegionViewModel
+
 @Composable
 fun CountryScreen(
     modifier: Modifier = Modifier,
     regionId: String,
-    viewModel: WeatherViewModel,
+    viewModel: CountryViewModel,
     onCountryItemClicked: (String) -> Unit,
 ) {
     val countryApiState = viewModel.countryApiState

@@ -20,13 +20,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skysnap.data.WeatherUiState
+import com.example.skysnap.data.region.states.RegionUiState
 import com.example.skysnap.model.Region
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegionList(
     modifier: Modifier = Modifier,
-    regionOverviewState: State<WeatherUiState>,
+    regionOverviewState: State<RegionUiState>,
     onRegionItemClicked: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()

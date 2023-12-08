@@ -1,15 +1,20 @@
-package com.example.skysnap.data
+package com.example.skysnap.data.region
 
-import com.example.skysnap.network.Region.RegionApiService
+import com.example.skysnap.data.country.ApiCountryRepository
+import com.example.skysnap.data.country.CountryRepository
+import com.example.skysnap.network.country.CountryApiService
+import com.example.skysnap.network.region.RegionApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.create
 
 interface AppContainer {
     val regionRepository: RegionRepository
+    val countryRepository: CountryRepository
 }
 
 class DefaultAppContainer: AppContainer {
@@ -31,7 +36,15 @@ class DefaultAppContainer: AppContainer {
         retrofit.create(RegionApiService::class.java)
     }
 
+    private val retrofitServiceCountry : CountryApiService by lazy {
+        retrofit.create(CountryApiService::class.java)
+    }
+
     override val regionRepository: RegionRepository by lazy {
         ApiRegionRepository(retrofitServiceRegion)
+    }
+
+    override val countryRepository: CountryRepository by lazy {
+        ApiCountryRepository(retrofitServiceCountry)
     }
 }

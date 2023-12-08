@@ -10,17 +10,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skysnap.components.RegionList
 import com.example.skysnap.screens.OverviewScreens
-import com.example.skysnap.screens.WeatherViewModel
 
 @Composable
 fun RegionScreen(
     modifier: Modifier = Modifier,
     onRegionItemClicked: (String) -> Unit,
-    weatherViewModel: WeatherViewModel = viewModel(factory = WeatherViewModel.Factory)
+    regionViewModel: RegionViewModel = viewModel(factory = RegionViewModel.Factory)
 ) {
-    val regionState = weatherViewModel.uiState.collectAsState()
-    val regionApiState = weatherViewModel.regionApiState
-    weatherViewModel.setScreenTitle(OverviewScreens.Start.title)
+    val regionState = regionViewModel.uiState.collectAsState()
+    val regionApiState = regionViewModel.regionApiState
+
     Column(modifier = modifier.padding(start = 8.dp, end = 8.dp)) {
         when (regionApiState) {
             is RegionApiState.Loading -> Text("Loading...")

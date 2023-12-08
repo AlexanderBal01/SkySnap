@@ -1,4 +1,4 @@
-package com.example.skysnap.screens
+package com.example.skysnap.screens.region
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,9 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.skysnap.SkySnapApplication
-import com.example.skysnap.data.RegionRepository
-import com.example.skysnap.data.WeatherUiState
-import com.example.skysnap.screens.region.RegionApiState
+import com.example.skysnap.data.region.RegionRepository
+import com.example.skysnap.data.region.states.RegionUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,21 +19,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class WeatherViewModel(private val regionRepository: RegionRepository) : ViewModel() {
-    private val _uiState = MutableStateFlow(WeatherUiState())
-    val uiState: StateFlow<WeatherUiState> = _uiState.asStateFlow()
+class RegionViewModel(private val regionRepository: RegionRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(RegionUiState())
+    val uiState: StateFlow<RegionUiState> = _uiState.asStateFlow()
 
     var regionApiState: RegionApiState by mutableStateOf(RegionApiState.Loading)
         private set
         init {
             getApiRegions()
-        }
-
-    var countryApiState: CountryApiState by mutableStateOf(CountryApiState.Loading)
-        private set
-
-        init {
-
         }
 
     private fun getApiRegions() {
@@ -52,45 +44,12 @@ class WeatherViewModel(private val regionRepository: RegionRepository) : ViewMod
         }
     }
 
-    fun getApiCountries(id: String = "") {
-        viewModelScope.launch {
-            try {
-                val listResult = regionRepository.getCountriesRegion(id)
-                _uiState.update {
-                    it.copy(countryList = listResult)
-                }
-                countryApiState = CountryApiState.Succes(listResult)
-            } catch (e: IOException) {
-                countryApiState = CountryApiState.Error
-                println(e)
-            }
-        }
-    }
-
-    fun setRegionId(id: String) {
-        _uiState.update {
-            it.copy(regionId = id)
-        }
-    }
-
-    fun setCountryId(id: String) {
-        _uiState.update {
-            it.copy(countryId = id)
-        }
-    }
-
-    fun setScreenTitle(id: Int) {
-        _uiState.update {
-            it.copy(screenTitle = id)
-        }
-    }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as SkySnapApplication)
                 val regionRepository = application.container.regionRepository
-                WeatherViewModel(regionRepository = regionRepository)
+                RegionViewModel(regionRepository = regionRepository)
             }
         }
     }

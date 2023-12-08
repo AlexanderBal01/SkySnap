@@ -40,7 +40,7 @@ fun CountryList(
         onValueChange = {
             searchText = it
         },
-        label = { Text(text = "Zoek hier voor een stad") },
+        label = { Text(text = "Zoek hier voor een land") },
         modifier = modifier.padding(start = 8.dp, end = 8.dp).fillMaxWidth(),
         shape = RoundedCornerShape(15.dp)
     )
