@@ -1,4 +1,4 @@
-package com.example.skysnap.screens
+package com.example.skysnap.screens.cities
 
 import androidx.compose.runtime.Composable
 

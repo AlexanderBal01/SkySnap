@@ -15,7 +15,7 @@ import com.example.skysnap.screens.OverviewScreens
 fun RegionScreen(
     modifier: Modifier = Modifier,
     onRegionItemClicked: (String) -> Unit,
-    regionViewModel: RegionViewModel = viewModel(factory = RegionViewModel.Factory)
+    regionViewModel: RegionViewModel,
 ) {
     val regionState = regionViewModel.uiState.collectAsState()
     val regionApiState = regionViewModel.regionApiState

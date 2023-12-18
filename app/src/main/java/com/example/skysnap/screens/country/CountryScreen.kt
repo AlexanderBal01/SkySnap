@@ -8,8 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.skysnap.components.CountryList
-import com.example.skysnap.screens.CountryApiState
-import com.example.skysnap.screens.region.RegionViewModel
 
 @Composable
 fun CountryScreen(
@@ -19,7 +17,13 @@ fun CountryScreen(
     onCountryItemClicked: (String) -> Unit,
 ) {
     val countryApiState = viewModel.countryApiState
-    viewModel.getApiCountries(id = regionId)
+
+    if (regionId == "all") {
+        viewModel.getApiCountries(id = "")
+    } else {
+        viewModel.getApiCountries(id = regionId)
+    }
+
     val countries = viewModel.uiState.collectAsState().value.countryList
 
     Column(modifier = modifier.padding(start = 8.dp, end = 8.dp)) {

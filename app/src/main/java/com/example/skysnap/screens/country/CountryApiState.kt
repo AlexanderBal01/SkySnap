@@ -1,4 +1,4 @@
-package com.example.skysnap.screens
+package com.example.skysnap.screens.country
 
 import com.example.skysnap.model.Country
 

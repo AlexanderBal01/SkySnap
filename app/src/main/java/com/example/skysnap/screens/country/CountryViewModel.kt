@@ -12,7 +12,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.skysnap.SkySnapApplication
 import com.example.skysnap.data.country.CountryRepository
 import com.example.skysnap.data.country.states.CountryUiState
-import com.example.skysnap.screens.CountryApiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

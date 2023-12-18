@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.skysnap.components.SkySnapAppBar
 import com.example.skysnap.components.SkySnapBottomAppBar
 import com.example.skysnap.screens.appInfo.AppInfoScreen
-import com.example.skysnap.screens.CityScreen
+import com.example.skysnap.screens.cities.CityScreen
 import com.example.skysnap.screens.country.CountryScreen
 import com.example.skysnap.screens.OverviewScreens
 import com.example.skysnap.screens.StarredScreen
@@ -70,7 +70,8 @@ fun SkySnapApp(
                 RegionScreen(
                     onRegionItemClicked = {
                         navController.navigate("${OverviewScreens.CountryOverview.name}/${it}")
-                    }
+                    },
+                    regionViewModel = regionViewModel
                 )
             }
 

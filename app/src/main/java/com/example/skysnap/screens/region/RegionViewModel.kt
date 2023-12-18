@@ -34,7 +34,7 @@ class RegionViewModel(private val regionRepository: RegionRepository) : ViewMode
             try {
                 val listResult = regionRepository.getRegions()
                 _uiState.update {
-                    it.copy(regionList = listResult)
+                    it.copy(regionList = it.regionList+listResult)
                 }
                 regionApiState = RegionApiState.Success(listResult)
             } catch (e: IOException) {
