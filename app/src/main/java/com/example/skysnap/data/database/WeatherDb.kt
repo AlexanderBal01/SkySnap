@@ -9,7 +9,7 @@ import com.example.skysnap.data.database.location.LocationDao
 import com.example.skysnap.data.database.weather.DbWeather
 import com.example.skysnap.data.database.weather.WeatherDao
 
-@Database(entities = [DbWeather::class, DbLocation::class], version = 2, exportSchema = false)
+@Database(entities = [DbWeather::class, DbLocation::class], version = 3, exportSchema = false)
 abstract class WeatherDb : RoomDatabase() {
     abstract fun weatherDao() : WeatherDao
     abstract fun locationDao(): LocationDao

@@ -10,7 +10,6 @@ import androidx.work.WorkManager
 import com.example.skysnap.data.database.weather.WeatherDao
 import com.example.skysnap.data.database.weather.asDbWeatherObject
 import com.example.skysnap.data.database.weather.asDomainWeatherObject
-import com.example.skysnap.data.database.weather.asDomainWeatherObjects
 import com.example.skysnap.model.Weather
 import com.example.skysnap.network.WeatherApiService
 import com.example.skysnap.network.asDomainObject
@@ -23,42 +22,28 @@ import java.net.SocketTimeoutException
 import java.util.UUID
 
 interface WeatherRepository {
-    fun getWeatherCity(city: String): Flow<Weather?>
-
-    fun getAll(): Flow<List<Weather>>
+    fun getWeather(location: String) : Flow<Weather?>
 
     suspend fun insertWeather(weather: Weather)
 
-    suspend fun deleteWeather(weather: Weather)
-
     suspend fun updateWeather(weather: Weather)
 
-    suspend fun refresh(city: String)
+    suspend fun refresh(location: String)
 
     var wifiWorkInfo: Flow<WorkInfo>
 }
 
 class CachingWeatherRepository(private val weatherDao: WeatherDao, private val weatherApiService: WeatherApiService, context: Context) : WeatherRepository {
-    override fun getWeatherCity(city: String): Flow<Weather?> {
-        return weatherDao.getItem(city).map {
+    override fun getWeather(location: String): Flow<Weather?> {
+        return weatherDao.getWeather(location).map {
             it.asDomainWeatherObject()
         }.onEach {
-            refresh(city)
-        }
-    }
-
-    override fun getAll(): Flow<List<Weather>> {
-        return weatherDao.getAllItems().map {
-            it.asDomainWeatherObjects()
+            refresh(location)
         }
     }
 
     override suspend fun insertWeather(weather: Weather) {
         weatherDao.insert(weather.asDbWeatherObject())
-    }
-
-    override suspend fun deleteWeather(weather: Weather) {
-        weatherDao.delete(weather.asDbWeatherObject())
     }
 
     override suspend fun updateWeather(weather: Weather) {
@@ -69,8 +54,8 @@ class CachingWeatherRepository(private val weatherDao: WeatherDao, private val w
     private val workManager = WorkManager.getInstance(context)
     override var wifiWorkInfo: Flow<WorkInfo> =
         workManager.getWorkInfoByIdFlow(workId)
-
-    override suspend fun refresh(city: String) {
+    override suspend fun refresh(location: String) {
+        Log.i("test", location)
         val constraints = Constraints
             .Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -84,12 +69,12 @@ class CachingWeatherRepository(private val weatherDao: WeatherDao, private val w
 
         try {
             weatherApiService
-                .getWeatherAsFlow(city)
+                .getWeatherAsFlow(location = location)
                 .asDomainObject()
                 .collect {
                     Log.i("CHECK", "refresh: $it")
                     insertWeather(it)
-            }
+                }
         } catch (e: SocketTimeoutException) {
             Log.e("REFRESH", "REFRESH: ${e.stackTraceToString()}")
         }

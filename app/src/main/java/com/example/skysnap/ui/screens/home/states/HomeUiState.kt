@@ -8,6 +8,7 @@ data class HomeState(
     val newLocationName: String = "",
     val scrollActionIdx: Int = 0,
     val scrollToItemIndex: Int = 0,
+    val selectedLocation: Location? = null
 )
 
 data class LocationListState(val locationList: List<Location> = listOf())
@@ -15,7 +16,7 @@ data class LocationListState(val locationList: List<Location> = listOf())
 data class WorkerState(val workerInfo: WorkInfo? = null)
 
 sealed interface LocationApiState {
-    object Succes: LocationApiState
+    object Success: LocationApiState
     object Error : LocationApiState
     object Loading : LocationApiState
 }

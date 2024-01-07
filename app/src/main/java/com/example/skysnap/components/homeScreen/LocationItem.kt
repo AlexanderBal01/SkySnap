@@ -29,9 +29,14 @@ import com.example.skysnap.R
 fun LocationItem(
     modifier: Modifier = Modifier,
     name: String = "",
-    navigateToWeather: () -> Unit
+    navigateToWeather: (String) -> Unit,
 ) {
-    Card(modifier = modifier.padding(dimensionResource(R.dimen.card_outer_padding)), onClick = { navigateToWeather() }) {
+    Card(
+        modifier = modifier.padding(dimensionResource(R.dimen.card_outer_padding)),
+        onClick = {
+            navigateToWeather(name)
+        }
+    ) {
         Row (
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = modifier

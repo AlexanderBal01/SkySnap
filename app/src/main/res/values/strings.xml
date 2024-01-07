@@ -8,6 +8,8 @@
     <string name="search">Search</string>
     <string name="add">Add location</string>
     <string name="cancel">Cancel</string>
+    <string name="loading">loading</string>
+    <string name="could_not_load">Couldn\'t load</string>
     <string name="navigate_to_weather_overview">Navigate to weather overview</string>
     <string name="navigation_rail">Navigate between items here</string>
     <string name="searchbar_location_label">Search here for a location</string>

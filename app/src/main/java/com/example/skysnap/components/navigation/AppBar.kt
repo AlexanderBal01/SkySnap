@@ -17,20 +17,20 @@ import com.example.skysnap.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(
-    title: Int,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             titleContentColor = Color.White,
         ),
         title = {
             Text(
-                text = stringResource(id = title),
+                text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleLarge
             )
+
         },
         navigationIcon = {
             if (canNavigateBack) {

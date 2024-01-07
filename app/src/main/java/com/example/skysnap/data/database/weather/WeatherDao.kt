@@ -1,7 +1,6 @@
 package com.example.skysnap.data.database.weather
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,12 +15,9 @@ interface WeatherDao {
     @Update
     suspend fun update(item: DbWeather)
 
-    @Delete
-    suspend fun delete(item: DbWeather)
+    @Query("SELECT * FROM weather WHERE location = :location")
+    fun getWeather(location: String): Flow<DbWeather>
 
-    @Query("SELECT * FROM weather ORDER BY cityName ASC")
-    fun getAllItems(): Flow<List<DbWeather>>
-
-    @Query("SELECT * FROM weather WHERE cityName = :name")
-    fun getItem(name: String): Flow<DbWeather>
+    @Query("SELECT * FROM weather")
+    fun getAll(): Flow<List<DbWeather>>
 }

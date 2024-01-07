@@ -12,26 +12,28 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.example.skysnap.R
-import com.example.skysnap.ui.theme.SkySnapTheme
+import com.example.skysnap.ui.screens.weatherOverview.states.WeatherOverviewUiState
 
 @Composable
 fun TodaySection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    uiStateWeather: WeatherOverviewUiState
 ) {
+
     Card(
         modifier = modifier
             .padding(dimensionResource(R.dimen.card_outer_padding))
     ) {
         Column (
             verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .animateContentSize(
                     animationSpec = spring(
@@ -44,31 +46,19 @@ fun TodaySection(
                 .padding(dimensionResource(R.dimen.card_padding))
         ) {
             Text(
-                text = "Dendermonde",
+                text = uiStateWeather.location?.name.toString(),
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = 45.sp,
                 textAlign = TextAlign.Center,
                 modifier = modifier.fillMaxWidth()
             )
-            AsyncImage(
-                model = "https://openweathermap.org/img/w/10d.png",
-                contentDescription = null,
-            )
             Text(
-                text = "20°C",
+                text = "${uiStateWeather.weather?.temp}°C",
                 color = Color.White,
                 fontSize = 45.sp,
                 textAlign = TextAlign.Center,
                 modifier = modifier.fillMaxWidth()
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TodaySectionPreview() {
-    SkySnapTheme {
-        TodaySection()
     }
 }

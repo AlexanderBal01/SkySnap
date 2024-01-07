@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.skysnap.R
 import com.example.skysnap.components.navigation.AppBar
@@ -35,7 +34,7 @@ import com.example.skysnap.components.navigation.NavigationDrawerContent
 import com.example.skysnap.components.navigation.NavigationRail
 import com.example.skysnap.ui.screens.home.HomeViewModel
 import com.example.skysnap.ui.screens.navigation.NavComponent
-import com.example.skysnap.ui.screens.navigation.OverviewScreens
+import com.example.skysnap.ui.screens.weatherOverview.WeatherOverviewViewModel
 import com.example.skysnap.ui.theme.SkySnapTheme
 import com.example.skysnap.ui.util.NavigationType
 
@@ -45,18 +44,12 @@ fun SkySnapApp(
     navigationType: NavigationType,
     navController: NavHostController = rememberNavController(),
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
+    weatherOverviewViewModel: WeatherOverviewViewModel = viewModel(factory = WeatherOverviewViewModel.Factory)
 ) {
     var isAddNewVisible by remember { mutableStateOf(false) }
 
-    val backStackEntry by navController.currentBackStackEntryAsState()
 
     val navigateUp: () -> Unit = { navController.navigateUp() }
-
-    val currentScreenTitle = OverviewScreens.valueOf(
-        backStackEntry?.destination?.route ?: OverviewScreens.Home.name,
-    ).title
-
-    val isHomeScreen = currentScreenTitle == OverviewScreens.Home.title
 
     val canNavigateBack = navController.previousBackStackEntry != null
 
@@ -81,13 +74,11 @@ fun SkySnapApp(
                     containerColor = Color.Transparent,
                     topBar = {
                         AppBar(
-                            title = currentScreenTitle,
                             canNavigateBack = canNavigateBack,
                             navigateUp = navigateUp
                         )
                     },
                     floatingActionButton = {
-                        if (isHomeScreen) {
                             FloatingActionButton(
                                 onClick = { isAddNewVisible = !isAddNewVisible },
                                 containerColor = MaterialTheme.colorScheme.primary
@@ -97,7 +88,6 @@ fun SkySnapApp(
                                     contentDescription = stringResource(id = R.string.add)
                                 )
                             }
-                        }
                     }
                 ) { innerPadding ->
                     NavComponent(
@@ -106,6 +96,7 @@ fun SkySnapApp(
                         fabActionVisible = isAddNewVisible,
                         fabResetAction = { isAddNewVisible = false },
                         homeViewModel = homeViewModel,
+                        weatherOverviewViewModel = weatherOverviewViewModel
                     )
                 }
             }
@@ -115,13 +106,11 @@ fun SkySnapApp(
                 containerColor = Color.Transparent,
                 topBar = {
                     AppBar(
-                        title = currentScreenTitle,
                         canNavigateBack = canNavigateBack,
                         navigateUp = navigateUp
                     )
                 },
                 floatingActionButton = {
-                    if (isHomeScreen) {
                         FloatingActionButton(
                             onClick = { isAddNewVisible = !isAddNewVisible },
                             containerColor = MaterialTheme.colorScheme.primary
@@ -132,7 +121,6 @@ fun SkySnapApp(
                                 tint = Color.White
                             )
                         }
-                    }
                 }
             ) { innerPadding ->
                 NavComponent(
@@ -141,6 +129,7 @@ fun SkySnapApp(
                     fabActionVisible = isAddNewVisible,
                     fabResetAction = { isAddNewVisible = false },
                     homeViewModel = homeViewModel,
+                    weatherOverviewViewModel = weatherOverviewViewModel
                 )
             }
         }
@@ -157,13 +146,11 @@ fun SkySnapApp(
                     containerColor = Color.Transparent,
                     topBar = {
                         AppBar(
-                            title = currentScreenTitle,
                             canNavigateBack = canNavigateBack,
                             navigateUp = navigateUp
                         )
                     },
                     floatingActionButton = {
-                        if (isHomeScreen) {
                             FloatingActionButton(
                                 onClick = { isAddNewVisible = !isAddNewVisible },
                                 containerColor = MaterialTheme.colorScheme.primary
@@ -173,7 +160,6 @@ fun SkySnapApp(
                                     contentDescription = stringResource(id = R.string.add)
                                 )
                             }
-                        }
                     }
                 ) { innerPadding ->
                     NavComponent(
@@ -182,6 +168,7 @@ fun SkySnapApp(
                         fabActionVisible = isAddNewVisible,
                         fabResetAction = { isAddNewVisible = false },
                         homeViewModel = homeViewModel,
+                        weatherOverviewViewModel = weatherOverviewViewModel
                     )
                 }
             }

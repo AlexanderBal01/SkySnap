@@ -6,15 +6,17 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import com.example.skysnap.ui.screens.home.HomeViewModel
 import com.example.skysnap.ui.screens.home.states.HomeState
 import com.example.skysnap.ui.screens.home.states.LocationListState
 import kotlinx.coroutines.launch
 
 @Composable
 fun LocationList(
+    homeViewModel: HomeViewModel,
     locationListState: LocationListState,
     locationOverviewState: HomeState,
-    navigateToWeather: () -> Unit
+    navigateToWeather: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     LazyColumn(state = lazyListState) {

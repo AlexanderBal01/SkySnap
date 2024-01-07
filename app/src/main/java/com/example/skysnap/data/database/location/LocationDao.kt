@@ -11,7 +11,7 @@ interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: DbLocation)
 
-    @Query("SELECT * FROM location ORDER BY name ASC")
+    @Query("SELECT * FROM location")
     fun getAllItems(): Flow<List<DbLocation>>
 
     @Query("SELECT * from location WHERE name = :name")

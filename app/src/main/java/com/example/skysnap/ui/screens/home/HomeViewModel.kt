@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.skysnap.SkySnapApplication
 import com.example.skysnap.data.LocationRepository
+import com.example.skysnap.model.Location
 import com.example.skysnap.ui.screens.home.states.HomeState
 import com.example.skysnap.ui.screens.home.states.LocationApiState
 import com.example.skysnap.ui.screens.home.states.LocationListState
@@ -48,7 +49,7 @@ class HomeViewModel(private val locationRepository: LocationRepository) : ViewMo
                     started = SharingStarted.WhileSubscribed(5_000L),
                     initialValue = LocationListState()
                 )
-            locationApiState = LocationApiState.Succes
+            locationApiState = LocationApiState.Success
 
             wifiWorkerState = locationRepository.wifiWorkInfo.map { WorkerState(it) }
                 .stateIn(
@@ -89,6 +90,24 @@ class HomeViewModel(private val locationRepository: LocationRepository) : ViewMo
         return with(_uiState) {
             value.newLocationName.isNotEmpty()
         }
+    }
+
+    fun setSelectedLocation(location: String) {
+        locationRepository.getLocation(location).map { locationResponse ->
+            _uiState.update {state ->
+                state.copy(
+                    selectedLocation = locationResponse
+                )
+            }
+        }
+    }
+
+    fun getSelectedLocation(): Location {
+        return Location(
+            name = _uiState.value.selectedLocation!!.name,
+            lat = _uiState.value.selectedLocation!!.lat,
+            lon = _uiState.value.selectedLocation!!.lon,
+        )
     }
 
     companion object {

@@ -4,18 +4,16 @@ import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface WeatherApiService {
-    @Headers("X-Api-Key: " + "9XetZjbjwPs8X7a9MfRxVA==RPdq2Q6XFUGOWQzO")
-    @GET("weather")
-    suspend fun getWeather(@Query("city") city: String): ApiWeather
+    @GET("data/2.5/weather")
+    suspend fun getWeatherFromLocation(@Query("q") location: String, @Query("units") units: String, @Query("appid") apiKey: String) : ApiWeather
 }
 
-fun WeatherApiService.getWeatherAsFlow(city: String): Flow<ApiWeather> = flow {
+fun WeatherApiService.getWeatherAsFlow(location: String): Flow<ApiWeather> = flow {
     try {
-        emit(getWeather(city))
+        emit(getWeatherFromLocation(location, "metric", "546e06657d55ff096daf4bc0302bbf39"))
     } catch (e: Exception) {
         Log.e("API", "getWeatherAsFlow: " + e.stackTraceToString())
     }
