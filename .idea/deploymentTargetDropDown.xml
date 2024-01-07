@@ -2,7 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="NavigationTest">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="canAddLocation()">
+        <State />
+      </entry>
+      <entry key="verifyStartDestination()">
         <State />
       </entry>
     </value>

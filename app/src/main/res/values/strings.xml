@@ -1,16 +1,14 @@
 <resources>
     <string name="app_name">SkySnap</string>
-    <string name="info_app">Info</string>
-    <string name="overview_week">Week overzicht</string>
-    <string name="overview_day">Dag overzicht</string>
-    <string name="overview_region">Regio overzicht</string>
-    <string name="overview_country">Landen overzicht</string>
-    <string name="overview_city">Steden overzicht</string>
-    <string name="overview_starred">Favorieten</string>
-    <string name="go_back">Ga terug</string>
-    <string name="go_home">Ga naar het homescherm</string>
-    <string name="go_info">Ga naar het infoscherm</string>
-    <string name="go_starred">Ga naar het favorietenscherm</string>
-    <string name="api_key">FxZbnUgAphCVmuwkP9oPpL5pR4mySqFN</string>
-    <string name="go_to_region">ga naar de gekozen regio</string>
+    <string name="overview_info">Info</string>
+    <string name="overview_home">Home</string>
+    <string name="weather_overview">Weather overview</string>
+    <string name="overview_starred">Favourites</string>
+    <string name="go_back">Go back</string>
+    <string name="search">Search</string>
+    <string name="add">Add location</string>
+    <string name="cancel">Cancel</string>
+    <string name="navigate_to_weather_overview">Navigate to weather overview</string>
+    <string name="navigation_rail">Navigate between items here</string>
+    <string name="searchbar_location_label">Search here for a location</string>
 </resources>

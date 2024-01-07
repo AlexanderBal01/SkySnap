@@ -3,7 +3,7 @@ package com.example.skysnap.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFF2854CC)
-val md_theme_light_onPrimary = Color(0xFFFFFFFF)
+val md_theme_light_onPrimary = Color(0xFF3399FF)
 val md_theme_light_primaryContainer = Color(0xFFDCE1FF)
 val md_theme_light_onPrimaryContainer = Color(0xFF00164E)
 val md_theme_light_secondary = Color(0xFF00668A)
