@@ -8,17 +8,38 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-class NetworkConnectionInterceptor(private val context: Context): Interceptor {
+/**
+ * Interceptor to check network connectivity before making network requests.
+ *
+ * @param context The application context.
+ */
+class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
+
+    /**
+     * Intercepts the network request and checks for network connectivity.
+     *
+     * @param chain The interceptor chain.
+     * @return The intercepted response.
+     */
     override fun intercept(chain: Interceptor.Chain): Response = chain.run {
+        // Check if the device is connected to the network
         if (!isConnected(context)) {
             Log.i("retrofit", "there is no connection")
+            // Throw IOException to indicate no network connection
             throw IOException()
         } else {
+            // Proceed with the network request if there is a connection
             val builder = chain.request().newBuilder()
             return@run chain.proceed(builder.build())
         }
     }
 
+    /**
+     * Checks if the device is connected to a network.
+     *
+     * @param context The application context.
+     * @return `true` if connected, `false` otherwise.
+     */
     private fun isConnected(context: Context): Boolean {
         val result: Boolean
         val connectivityManager =

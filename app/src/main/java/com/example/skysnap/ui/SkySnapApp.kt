@@ -38,6 +38,15 @@ import com.example.skysnap.ui.screens.weatherOverview.WeatherOverviewViewModel
 import com.example.skysnap.ui.theme.SkySnapTheme
 import com.example.skysnap.ui.util.NavigationType
 
+/**
+ * Composable function representing the main structure of the SkySnap application.
+ *
+ * @param modifier Modifier for styling the layout.
+ * @param navigationType Type of navigation UI pattern to be used in the application.
+ * @param navController Navigation controller for handling navigation within the app.
+ * @param homeViewModel ViewModel for the Home screen providing data and logic.
+ * @param weatherOverviewViewModel ViewModel for the Weather Overview screen providing data and logic.
+ */
 @Composable
 fun SkySnapApp(
     modifier: Modifier = Modifier,
@@ -46,15 +55,19 @@ fun SkySnapApp(
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     weatherOverviewViewModel: WeatherOverviewViewModel = viewModel(factory = WeatherOverviewViewModel.Factory)
 ) {
+    // State to track the visibility of the "Add" button.
     var isAddNewVisible by remember { mutableStateOf(false) }
 
-
+    // Callback for navigating up in the navigation hierarchy.
     val navigateUp: () -> Unit = { navController.navigateUp() }
 
+    // Check if there is a previous destination in the navigation stack.
     val canNavigateBack = navController.previousBackStackEntry != null
 
+    // Based on the specified navigation type, different UI structures are used.
     when (navigationType) {
         NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+            // Permanent navigation drawer layout.
             PermanentNavigationDrawer(
                 drawerContent = {
                     PermanentDrawerSheet (modifier.width(dimensionResource(R.dimen.drawer_width))) {
@@ -70,6 +83,7 @@ fun SkySnapApp(
                     }
                 }
             ) {
+                // Scaffold with AppBar and FloatingActionButton for the Permanent Navigation Drawer.
                 Scaffold(
                     containerColor = Color.Transparent,
                     topBar = {
@@ -79,17 +93,18 @@ fun SkySnapApp(
                         )
                     },
                     floatingActionButton = {
-                            FloatingActionButton(
-                                onClick = { isAddNewVisible = !isAddNewVisible },
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = stringResource(id = R.string.add)
-                                )
-                            }
+                        FloatingActionButton(
+                            onClick = { isAddNewVisible = !isAddNewVisible },
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = stringResource(id = R.string.add)
+                            )
+                        }
                     }
                 ) { innerPadding ->
+                    // Navigation component for handling different screens.
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
@@ -102,6 +117,7 @@ fun SkySnapApp(
             }
         }
         NavigationType.BOTTOM_NAVIGATION -> {
+            // Scaffold layout with Bottom Navigation.
             Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
@@ -111,18 +127,19 @@ fun SkySnapApp(
                     )
                 },
                 floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { isAddNewVisible = !isAddNewVisible },
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = stringResource(id = R.string.add),
-                                tint = Color.White
-                            )
-                        }
+                    FloatingActionButton(
+                        onClick = { isAddNewVisible = !isAddNewVisible },
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(id = R.string.add),
+                            tint = Color.White
+                        )
+                    }
                 }
             ) { innerPadding ->
+                // Navigation component for handling different screens.
                 NavComponent(
                     navController = navController,
                     modifier = modifier.padding(innerPadding),
@@ -134,14 +151,16 @@ fun SkySnapApp(
             }
         }
         else -> {
+            // Default layout with Navigation Rail or Row.
             Row {
+                // Display Navigation Rail if specified.
                 AnimatedVisibility(visible = navigationType == NavigationType.NAVIGATION_RAIL) {
-                    stringResource(R.string.navigation_rail)
                     NavigationRail(
                         selectedDestination = navController.currentDestination,
                         onTabPressed = { node: String -> navController.navigate(node) }
                     )
                 }
+                // Scaffold layout with AppBar and FloatingActionButton.
                 Scaffold (
                     containerColor = Color.Transparent,
                     topBar = {
@@ -151,17 +170,18 @@ fun SkySnapApp(
                         )
                     },
                     floatingActionButton = {
-                            FloatingActionButton(
-                                onClick = { isAddNewVisible = !isAddNewVisible },
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = stringResource(id = R.string.add)
-                                )
-                            }
+                        FloatingActionButton(
+                            onClick = { isAddNewVisible = !isAddNewVisible },
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = stringResource(id = R.string.add)
+                            )
+                        }
                     }
                 ) { innerPadding ->
+                    // Navigation component for handling different screens.
                     NavComponent(
                         navController = navController,
                         modifier = modifier.padding(innerPadding),
@@ -176,6 +196,9 @@ fun SkySnapApp(
     }
 }
 
+/**
+ * Preview function for the SkySnapApp.
+ */
 @Preview(showBackground = true)
 @Composable
 fun SkySnapAppPreview() {

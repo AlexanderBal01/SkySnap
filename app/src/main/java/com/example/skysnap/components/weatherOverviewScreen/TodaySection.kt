@@ -26,12 +26,11 @@ fun TodaySection(
     modifier: Modifier = Modifier,
     uiStateWeather: WeatherOverviewUiState
 ) {
-
     Card(
         modifier = modifier
             .padding(dimensionResource(R.dimen.card_outer_padding))
     ) {
-        Column (
+        Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
@@ -45,13 +44,16 @@ fun TodaySection(
                 .background(MaterialTheme.colorScheme.onPrimary)
                 .padding(dimensionResource(R.dimen.card_padding))
         ) {
+            // Display Location Name
             Text(
-                text = uiStateWeather.location?.name.toString(),
+                text = uiStateWeather.location?.name.orEmpty(),
                 color = Color.White,
                 fontSize = 45.sp,
                 textAlign = TextAlign.Center,
                 modifier = modifier.fillMaxWidth()
             )
+
+            // Display Temperature
             Text(
                 text = "${uiStateWeather.weather?.temp}°C",
                 color = Color.White,

@@ -22,10 +22,12 @@ fun NavigationDrawerContent(
     onTabPressed: ((String) -> Unit),
     modifier: Modifier = Modifier
 ) {
-    Column (modifier = modifier) {
+    Column(modifier = modifier) {
+        // Loop through each navItem in OverviewScreens
         for (navItem in OverviewScreens.values()) {
             NavigationDrawerItem(
-                selected =  selectedDestination?.route == navItem.name,
+                // Check if the current navItem is selected
+                selected = selectedDestination?.route == navItem.name,
                 label = {
                     Text(
                         text = navItem.name,
@@ -41,7 +43,7 @@ fun NavigationDrawerContent(
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent,
                 ),
-                onClick = { onTabPressed(navItem.name)}
+                onClick = { onTabPressed(navItem.name) }
             )
         }
     }

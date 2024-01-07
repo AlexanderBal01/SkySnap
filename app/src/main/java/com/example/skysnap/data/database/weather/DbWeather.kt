@@ -4,6 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.skysnap.model.Weather
 
+/**
+ * Room Entity class representing weather data in the database.
+ *
+ * @param location The location for which the weather data is stored (primary key).
+ * @param temp The temperature.
+ * @param feelsLike The "feels like" temperature.
+ * @param tempMin The minimum temperature.
+ * @param tempMax The maximum temperature.
+ */
 @Entity(tableName = "weather")
 data class DbWeather(
     @PrimaryKey
@@ -14,7 +23,12 @@ data class DbWeather(
     val tempMax: Double = 0.00
 )
 
-fun DbWeather.asDomainWeatherObject() : Weather {
+/**
+ * Extension function to map DbWeather to the domain Weather object.
+ *
+ * @return Weather object.
+ */
+fun DbWeather.asDomainWeatherObject(): Weather {
     return Weather(
         location = this.location,
         temp = this.temp,
@@ -24,7 +38,12 @@ fun DbWeather.asDomainWeatherObject() : Weather {
     )
 }
 
-fun Weather.asDbWeatherObject() : DbWeather {
+/**
+ * Extension function to map Weather to the database DbWeather object.
+ *
+ * @return DbWeather object.
+ */
+fun Weather.asDbWeatherObject(): DbWeather {
     return DbWeather(
         location = this.location,
         temp = this.temp,

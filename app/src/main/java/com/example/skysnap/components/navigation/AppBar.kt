@@ -21,18 +21,20 @@ fun AppBar(
     navigateUp: () -> Unit = {},
 ) {
     TopAppBar(
+        // Customize top app bar colors
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             titleContentColor = Color.White,
         ),
         title = {
+            // Display the app name as the title
             Text(
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleLarge
             )
-
         },
         navigationIcon = {
+            // Display the back arrow icon if navigation is allowed
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
                     Icon(

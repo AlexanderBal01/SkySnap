@@ -15,20 +15,31 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class WifiNotificationWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
+/**
+ * Worker class responsible for performing background work related to Wi-Fi notifications.
+ */
+class WifiNotificationWorker(context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
+
+    /**
+     * This function is called when the worker is scheduled to perform its task.
+     */
     override suspend fun doWork(): Result {
-        makeStatusNotification("starting the worker", applicationContext)
-        return withContext(Dispatchers.IO){
+        makeStatusNotification("Starting the worker", applicationContext)
+        return withContext(Dispatchers.IO) {
             return@withContext try {
                 delay(10000L)
-                makeStatusNotification("work finished successfully", applicationContext)
+                makeStatusNotification("Work finished successfully", applicationContext)
                 Result.success()
-            } catch (throwable: Throwable){
+            } catch (throwable: Throwable) {
                 Result.failure()
             }
         }
     }
 
+    /**
+     * Helper function to create and display a status notification.
+     */
     private fun makeStatusNotification(message: String, context: Context) {
 
         // Make a channel if necessary

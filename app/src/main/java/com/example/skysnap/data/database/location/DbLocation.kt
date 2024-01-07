@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.skysnap.model.Location
 
+/**
+ * Room Entity class representing a location in the database.
+ */
 @Entity(tableName = "location")
 data class DbLocation(
     @PrimaryKey
@@ -12,6 +15,11 @@ data class DbLocation(
     val lon: Double = 0.00
 )
 
+/**
+ * Extension function to convert a DbLocation object to a Location object.
+ *
+ * @return Location object.
+ */
 fun DbLocation.asDomainLocationObject(): Location {
     return Location(
         name = this.name,
@@ -20,6 +28,11 @@ fun DbLocation.asDomainLocationObject(): Location {
     )
 }
 
+/**
+ * Extension function to convert a Location object to a DbLocation object.
+ *
+ * @return DbLocation object.
+ */
 fun Location.asDbLocationObject(): DbLocation {
     return DbLocation(
         name = this.name,
@@ -28,14 +41,17 @@ fun Location.asDbLocationObject(): DbLocation {
     )
 }
 
+/**
+ * Extension function to convert a list of DbLocation objects to a list of Location objects.
+ *
+ * @return List of Location objects.
+ */
 fun List<DbLocation>.asDomainLocationObjects(): List<Location> {
-    var locationList = this.map {
+    return this.map {
         Location(
             name = it.name,
             lat = it.lat,
             lon = it.lon
         )
     }
-
-    return locationList
 }

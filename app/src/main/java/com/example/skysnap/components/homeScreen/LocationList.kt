@@ -18,18 +18,25 @@ fun LocationList(
     locationOverviewState: HomeState,
     navigateToWeather: (String) -> Unit
 ) {
+    // Remember LazyListState to manage scrolling
     val lazyListState = rememberLazyListState()
+
+    // Compose LazyColumn to display a list of locations
     LazyColumn(state = lazyListState) {
-        items(locationListState.locationList) {
-            LocationItem(name = it.name, navigateToWeather = navigateToWeather)
+        items(locationListState.locationList) { location ->
+            // LocationItem composable for each location
+            LocationItem(name = location.name, navigateToWeather = navigateToWeather)
         }
     }
 
+    // Coroutine scope for launching scrolling effects
     val coroutineScope = rememberCoroutineScope()
 
+    // LaunchedEffect to scroll to the specified item when the index changes
     LaunchedEffect(locationOverviewState.scrollActionIdx) {
         if (locationOverviewState.scrollActionIdx != 0) {
             coroutineScope.launch {
+                // Animate scroll to the specified item index
                 lazyListState.animateScrollToItem(locationOverviewState.scrollToItemIndex)
             }
         }

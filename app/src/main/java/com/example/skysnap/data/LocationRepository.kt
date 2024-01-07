@@ -22,19 +22,73 @@ import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 import java.util.UUID
 
+/**
+ * Repository interface for location data.
+ */
 interface LocationRepository {
+    /**
+     * Get location data for a specific location as a flow.
+     *
+     * @param location The name or label for the location.
+     * @return Flow emitting [Location] data for the specified location.
+     */
     fun getLocation(location: String): Flow<Location?>
 
+    /**
+     * Get all location data as a flow.
+     *
+     * @return Flow emitting a list of [Location] data.
+     */
     fun getAll(): Flow<List<Location>>
 
+    /**
+     * Insert location data into the repository.
+     *
+     * @param location The location data to be inserted.
+     */
     suspend fun insertLocation(location: Location)
 
+    /**
+     * Refresh location data for a specific location, updating the repository.
+     *
+     * @param location The name or label for the location.
+     */
     suspend fun refresh(location: String)
 
+    /**
+     * Flow providing [WorkInfo] for the Wi-Fi notification worker.
+     */
     var wifiWorkInfo: Flow<WorkInfo>
 }
 
-class CachingLocationRepository(private val locationDao: LocationDao, private val locationApiService: LocationApiService, context: Context) : LocationRepository {
+/**
+ * Implementation of [LocationRepository] with caching capabilities.
+ *
+ * @param locationDao Data Access Object (DAO) for location data.
+ * @param locationApiService API service for retrieving location data.
+ * @param context Application context for accessing system services.
+ */
+class CachingLocationRepository(
+    private val locationDao: LocationDao,
+    private val locationApiService: LocationApiService,
+    context: Context
+) : LocationRepository {
+
+    private var workId = UUID(1, 2)
+    private val workManager = WorkManager.getInstance(context)
+
+    /**
+     * Flow providing [WorkInfo] for the Wi-Fi notification worker.
+     */
+    override var wifiWorkInfo: Flow<WorkInfo> =
+        workManager.getWorkInfoByIdFlow(workId)
+
+    /**
+     * Get location data for a specific location as a flow.
+     *
+     * @param location The name or label for the location.
+     * @return Flow emitting [Location] data for the specified location.
+     */
     override fun getLocation(location: String): Flow<Location?> {
         return locationDao.getItem(location).map {
             it.asDomainLocationObject()
@@ -43,20 +97,31 @@ class CachingLocationRepository(private val locationDao: LocationDao, private va
         }
     }
 
+    /**
+     * Get all location data as a flow.
+     *
+     * @return Flow emitting a list of [Location] data.
+     */
     override fun getAll(): Flow<List<Location>> {
         return locationDao.getAllItems().map {
             it.asDomainLocationObjects()
         }
     }
 
+    /**
+     * Insert location data into the repository.
+     *
+     * @param location The location data to be inserted.
+     */
     override suspend fun insertLocation(location: Location) {
         locationDao.insert(location.asDbLocationObject())
     }
 
-    private var workId = UUID(1,2)
-    private val workManager = WorkManager.getInstance(context)
-    override var wifiWorkInfo: Flow<WorkInfo> =
-        workManager.getWorkInfoByIdFlow(workId)
+    /**
+     * Refresh location data for a specific location, updating the repository.
+     *
+     * @param location The name or label for the location.
+     */
     override suspend fun refresh(location: String) {
         val constraints = Constraints
             .Builder()

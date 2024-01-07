@@ -33,19 +33,25 @@ fun CreateLocation(
     ) {
         Card(
             shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+            modifier = Modifier.padding(dimensionResource(R.dimen.large_padding))
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(dimensionResource(R.dimen.large_padding)),
             ) {
+                // OutlinedTextField for entering location name
                 OutlinedTextField(
                     value = locationName,
                     onValueChange = onLocationNameChanged,
                     label = { Text(stringResource(R.string.searchbar_location_label)) },
                     textStyle = TextStyle(MaterialTheme.colorScheme.primary)
                 )
+
+                // Spacer for vertical separation
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_height)))
+
+                // Row with TextButtons for cancel and add actions
                 Row {
                     Spacer(Modifier.weight(1F))
                     TextButton(onClick = onDismissRequest) {

@@ -24,38 +24,61 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import java.io.IOException
 
+/**
+ * ViewModel for the Weather Overview screen, responsible for handling weather-related UI logic.
+ *
+ * @param weatherRepository Repository for accessing weather-related data.
+ */
 class WeatherOverviewViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
+
+    // MutableStateFlow for the UI state of the Weather Overview screen.
     private val _uiState = MutableStateFlow(WeatherOverviewUiState())
     val uiState: StateFlow<WeatherOverviewUiState> = _uiState.asStateFlow()
 
+    // MutableState for the weather API state.
     var weatherApiState: WeatherApiState by mutableStateOf(WeatherApiState.Loading)
         private set
 
+    // StateFlow for the background worker state.
     lateinit var wifiWorkerState: StateFlow<WorkerState>
 
+    /**
+     * Fetch weather information for the specified location from the repository.
+     *
+     * @param location The location for which weather information is requested.
+     */
     fun getRepoWeather(location: String) {
-            try {
-                weatherRepository.getWeather(location).map { weatherResponse ->
-                    _uiState.update {
-                        it.copy(
-                            weather = weatherResponse
-                        )
-                    }
-                }
-
-                weatherApiState = WeatherApiState.Success
-
-                wifiWorkerState = weatherRepository.wifiWorkInfo.map { WorkerState(it) }
-                    .stateIn(
-                        scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(5_000L),
-                        initialValue = WorkerState()
+        try {
+            // Fetch weather information and update the UI state.
+            weatherRepository.getWeather(location).map { weatherResponse ->
+                _uiState.update {
+                    it.copy(
+                        weather = weatherResponse
                     )
-            } catch (e: IOException) {
-                weatherApiState = WeatherApiState.Error
+                }
             }
+
+            // Set the weather API state to success.
+            weatherApiState = WeatherApiState.Success
+
+            // Fetch the background worker state and convert it to a StateFlow.
+            wifiWorkerState = weatherRepository.wifiWorkInfo.map { WorkerState(it) }
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000L),
+                    initialValue = WorkerState()
+                )
+        } catch (e: IOException) {
+            // Set the weather API state to error if an exception occurs.
+            weatherApiState = WeatherApiState.Error
+        }
     }
 
+    /**
+     * Set the selected location in the UI state.
+     *
+     * @param selectedLocation The selected location for which weather information is displayed.
+     */
     fun setLocation(selectedLocation: Location?) {
         _uiState.update {
             it.copy(
@@ -65,17 +88,20 @@ class WeatherOverviewViewModel(private val weatherRepository: WeatherRepository)
     }
 
     companion object {
+        // Singleton instance of the WeatherOverviewViewModel.
         private var Instance: WeatherOverviewViewModel? = null
+
+        // Factory for creating the ViewModel using AndroidViewModelFactory.
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {
+                    // Create the WeatherOverviewViewModel instance using the application's container.
                     val application = (this[APPLICATION_KEY] as SkySnapApplication)
                     val weatherRepository = application.container.weatherRepository
                     Instance = WeatherOverviewViewModel(weatherRepository = weatherRepository)
                 }
                 Instance!!
             }
-
         }
     }
 }

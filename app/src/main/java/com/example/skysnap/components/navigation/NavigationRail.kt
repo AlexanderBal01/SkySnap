@@ -11,8 +11,10 @@ import com.example.skysnap.ui.screens.navigation.OverviewScreens
 @Composable
 fun NavigationRail(selectedDestination: NavDestination?, onTabPressed: (String) -> Unit, modifier: Modifier = Modifier) {
     NavigationRail(modifier = modifier) {
+        // Loop through each navItem in OverviewScreens
         for (navItem in OverviewScreens.values()) {
             NavigationRailItem(
+                // Check if the current navItem is selected
                 selected = selectedDestination?.route == navItem.name,
                 onClick = { onTabPressed(navItem.name) },
                 icon = {
