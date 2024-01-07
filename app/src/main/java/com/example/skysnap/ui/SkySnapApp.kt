@@ -56,6 +56,8 @@ fun SkySnapApp(
         backStackEntry?.destination?.route ?: OverviewScreens.Home.name,
     ).title
 
+    val isHomeScreen = currentScreenTitle == OverviewScreens.Home.title
+
     val canNavigateBack = navController.previousBackStackEntry != null
 
     when (navigationType) {
@@ -85,11 +87,16 @@ fun SkySnapApp(
                         )
                     },
                     floatingActionButton = {
-                        FloatingActionButton(onClick = { isAddNewVisible = !isAddNewVisible }) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = stringResource(id = R.string.add)
-                            )
+                        if (isHomeScreen) {
+                            FloatingActionButton(
+                                onClick = { isAddNewVisible = !isAddNewVisible },
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = stringResource(id = R.string.add)
+                                )
+                            }
                         }
                     }
                 ) { innerPadding ->
@@ -114,15 +121,17 @@ fun SkySnapApp(
                     )
                 },
                 floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { isAddNewVisible = !isAddNewVisible },
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(id = R.string.add),
-                            tint = Color.White
-                        )
+                    if (isHomeScreen) {
+                        FloatingActionButton(
+                            onClick = { isAddNewVisible = !isAddNewVisible },
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = stringResource(id = R.string.add),
+                                tint = Color.White
+                            )
+                        }
                     }
                 }
             ) { innerPadding ->
@@ -154,11 +163,16 @@ fun SkySnapApp(
                         )
                     },
                     floatingActionButton = {
-                        FloatingActionButton(onClick = { isAddNewVisible = !isAddNewVisible }) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = stringResource(id = R.string.add)
-                            )
+                        if (isHomeScreen) {
+                            FloatingActionButton(
+                                onClick = { isAddNewVisible = !isAddNewVisible },
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = stringResource(id = R.string.add)
+                                )
+                            }
                         }
                     }
                 ) { innerPadding ->

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.skysnap.ui.screens.home.HomeScreen
 import com.example.skysnap.ui.screens.home.HomeViewModel
+import com.example.skysnap.ui.screens.weatherOverview.WeatherOverviewScreen
 
 @Composable
 fun NavComponent(
@@ -29,7 +30,7 @@ fun NavComponent(
             HomeScreen(homeViewModel = homeViewModel, navigateToWeather = navigateToWeatherScreen, isAddingVisible = fabActionVisible, makeInvisable = fabResetAction)
         }
         composable(route = OverviewScreens.WeatherOverview.name) {
-
+            WeatherOverviewScreen()
         }
     }
 }
