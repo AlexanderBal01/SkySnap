@@ -36,7 +36,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val windowSize = calculateWindowSizeClass(activity = this)
 
-                    Image(painter = image,
+                    Image(
+                        painter = image,
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier.fillMaxSize()
