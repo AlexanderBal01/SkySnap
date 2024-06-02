@@ -14,6 +14,8 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import com.example.skysnap.navigation.util.NavigationType
+import com.example.skysnap.ui.skySnapApp
 import com.example.skysnap.ui.theme.SkySnapTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,16 +43,16 @@ class MainActivity : ComponentActivity() {
 
                     when (windowSize.widthSizeClass) {
                         WindowWidthSizeClass.Compact -> {
-
+                            skySnapApp(navigationType = NavigationType.BOTTOM_NAVIGATION)
                         }
                         WindowWidthSizeClass.Medium -> {
-
+                            skySnapApp(navigationType = NavigationType.NAVIGATION_RAIL)
                         }
                         WindowWidthSizeClass.Expanded -> {
-
+                            skySnapApp(navigationType = NavigationType.PERMANENT_NAVIGATION_DRAWER)
                         }
                         else -> {
-
+                            skySnapApp(navigationType = NavigationType.BOTTOM_NAVIGATION)
                         }
                     }
                 }
