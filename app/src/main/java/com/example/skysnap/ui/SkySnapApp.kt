@@ -20,6 +20,6 @@ fun skySnapApp(
 @Composable
 fun skySnapAppPreview() {
     SkySnapTheme {
-        skySnapApp()
+        skySnapApp(navigationType = NavigationType.BOTTOM_NAVIGATION)
     }
 }
