@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">SkySnap</string>
+    <string name="app_name" translatable="false">SkySnap</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="favourites">Favourites</string>
 </resources>
